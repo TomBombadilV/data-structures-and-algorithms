@@ -1,5 +1,4 @@
 class AdjacencyList:
-
     def __init__(self, n: int):
         # Using list of lists instead of list of sets to allow for multiple
         # instances of an edge
@@ -12,7 +11,8 @@ class AdjacencyList:
     # Make sure node is within range of list
     def is_valid(self, v: int) -> bool:
         return False if v > len(self.list) - 1 or v < 0 else True
-    
+   
+    # Add an edge to the graph
     def add_edge(self, v1: int, v2: int) -> bool:
         # Make sure vertices are valid
         if not(self.is_valid(v1) or self.is_valid(v2)):
@@ -28,6 +28,7 @@ class AdjacencyList:
             print("Edge successfully added.")
         return True
 
+    # Remove an edge from the graph
     def remove_edge(self, v1: int, v2: int) -> bool:
         # Make sure vertices are valid
         if not(self.is_valid(v1) or self.is_valid(v2)):
@@ -41,13 +42,23 @@ class AdjacencyList:
             self.list[v1].remove(v2)
             print("Edge successfully deleted.")
   
-    def print_list(self) -> None:
+   # Print entire graph
+   def print_list(self) -> None:
         print("Adjacency List:")
         for i, l in enumerate(self.list):
             print("{0}->{1}".format(i, l))
 
-class GraphNode:
+class AdjacencyMatrix:
+    def __init__(self, val):
+        self.matrix = [[None for _ in range(val)] for _ in range(val)]
+    
+    def size(self):
+        return len(self.matrix)
 
+    def add_edge(self, v1: int, v2: int) -> bool:
+
+        
+class GraphNode:
     def __init__(self, val):
         self.val = val
         self.edges = []
