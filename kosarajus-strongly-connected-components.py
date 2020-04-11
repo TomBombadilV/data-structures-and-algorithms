@@ -10,7 +10,9 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
    
     # Reverses all of the edges of the original graph and returns as new graph 
     def reverse_graph(g: AdjacencyList) -> AdjacencyList:
+        # Create new graph
         g_rev = AdjacencyList(g.size())
+        # For each vertex in old graph, add its reversed edge to new graph
         for i, l in enumerate(g.list):
             for v in l:
                 g_rev.add_edge(v, i)
