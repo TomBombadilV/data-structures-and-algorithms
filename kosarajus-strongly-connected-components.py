@@ -23,7 +23,9 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
     def dfs_finishing_time_util(g_rev: AdjacencyList, s: int, 
                                 visited: List[bool], time: int, 
                                 finishing_time: List[int]) -> int:
+        # Mark as visited
         visited[s] = True
+        # Visit all adjacent vertices that haven't been visited
         for v in g_rev.list[s]:
             if not(visited[v]):
                 time = dfs_finishing_time_util( g_rev, v, visited, time, 
@@ -45,8 +47,6 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
         for i in reversed(range(g_rev.size())):
             if not(visited[i]):
                 time = dfs_finishing_time_util( g_rev, i, visited, time, finishing_time)
-        print(time)
-        print(finishing_time, visited)
         return finishing_time
    
     # Alter finishing_time from ft[i] where i is vertex number and ft[i] is
