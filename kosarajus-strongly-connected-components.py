@@ -46,7 +46,8 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
         # Perform DFS on all vertices
         for i in reversed(range(g_rev.size())):
             if not(visited[i]):
-                time = dfs_finishing_time_util( g_rev, i, visited, time, finishing_time)
+                time = dfs_finishing_time_util( g_rev, i, visited, time, 
+                                                finishing_time)
         return finishing_time
    
     # Alter finishing_time from ft[i] where i is vertex number and ft[i] is
