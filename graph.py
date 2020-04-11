@@ -8,7 +8,7 @@ class AdjacencyList:
     def size(self) -> int:
         return len(self.list)
 
-    # Make sure node is within range of list
+    # Make sure vertex exists in graph
     def is_valid(self, v: int) -> bool:
         return False if v > len(self.list) - 1 or v < 0 else True
    
@@ -41,23 +41,60 @@ class AdjacencyList:
         else:
             self.list[v1].remove(v2)
             print("Edge successfully deleted.")
-  
-   # Print entire graph
-   def print_list(self) -> None:
+        return True
+
+    # Print entire graph
+    def print_list(self) -> None:
         print("Adjacency List:")
         for i, l in enumerate(self.list):
             print("{0}->{1}".format(i, l))
 
 class AdjacencyMatrix:
     def __init__(self, val):
-        self.matrix = [[None for _ in range(val)] for _ in range(val)]
-    
+        self.matrix = [[0 for _ in range(val)] for _ in range(val)]
+   
+    # Returns number of vertices in graph
     def size(self):
         return len(self.matrix)
 
+    # Make sure given vertex exists in graph
+    def is_valid(self, v: int) -> bool:
+        return False if v > len(self.matrix) - 1 or v < 0 else True
+   
+    # Add an edge to the graph
     def add_edge(self, v1: int, v2: int) -> bool:
+        # Make sure vertices are valid
+        if not(self.is_valid(v1) or self.is_valid(v2)):
+            print("At least one of given vertices does not exist.")
+            return False
+        # Make sure edge doesn't already exist
+        if self.matrix[v1][v2] == 1:
+            print("Edge already exists in graph.")
+        # Add edge
+        else:
+            self.matrix[v1][v2] = 1
+            print("Edge successfully added.")
+        return True
 
-        
+    # Remove an edge from the graph
+    def remove_edge(self, v1: int, v2: int) -> bool:
+        # Make sure vertices are valid
+        if not(self.is_valid(v1) or self.is_valid(v2)):
+            print("At least one of given vertices does not exist.")
+            return False
+        # Make sure edge exists
+        if self.matrix[v1][v2] == 0:
+            print("Edge does not exist in graph.")
+        else:
+            self.matrix[v1][v2] = 0
+            print("Edge successfully deleted.")
+        return True
+
+    # Print entire graph
+    def print_graph(self) -> None:
+        for row in self.matrix:
+            print(*row)
+
 class GraphNode:
     def __init__(self, val):
         self.val = val

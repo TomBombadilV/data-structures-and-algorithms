@@ -31,16 +31,6 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
         time += 1
         return time
    
-    # Alter finishing_time from ft[i] where i is vertex number and ft[i] is
-    # finishing time => ft[i] where i is finishing time and ft[i] is vertex 
-    # number. This is so we can perform DFS in incremental order based on the
-    # finishing time and also look up the original vertex number.
-    def convert_finishing_time(finishing_time: List[int]) -> List[int]:
-        converted = [None] * len(finishing_time)
-        for i, t in enumerate(finishing_time):
-            converted[t] = i
-        return converted
-
     # Perform DFS on reversed graph to get finishing time of vertices
     def dfs_finishing_time(g_rev: AdjacencyList) -> List[int]:
         # Counter for finishing time
@@ -51,13 +41,22 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
         visited = [False] * g_rev.size()
         # Perform DFS on all vertices
         for i in reversed(range(g_rev.size())):
-           if not(visited[i]):
-               time = dfs_finishing_time_util(  g_rev, i, visited, time, 
-                                                finishing_time)
+            if not(visited[i]):
+                time = dfs_finishing_time_util( g_rev, i, visited, time, finishing_time)
         print(time)
         print(finishing_time, visited)
         return finishing_time
    
+    # Alter finishing_time from ft[i] where i is vertex number and ft[i] is
+    # finishing time => ft[i] where i is finishing time and ft[i] is vertex 
+    # number. This is so we can perform DFS in incremental order based on the
+    # finishing time and also look up the original vertex number.
+    def convert_finishing_time(finishing_time: List[int]) -> List[int]:
+        converted = [None] * len(finishing_time)
+        for i, t in enumerate(finishing_time):
+            converted[t] = i
+        return converted
+
     def dfs_scc_util(   g: AdjacencyList, s: int, visited: List[int], 
                         res: List[int]) -> List[int]:
         visited[s] = True
