@@ -52,29 +52,34 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
     # Alter finishing_time from ft[i] where i is vertex number and ft[i] is
     # finishing time => ft[i] where i is finishing time and ft[i] is vertex 
     # number. This is so we can perform DFS in incremental order based on the
-    # finishing time and also look up the original vertex number.
+    # finishing time without having to sort.
     def convert_finishing_time(finishing_time: List[int]) -> List[int]:
         converted = [None] * len(finishing_time)
         for i, t in enumerate(finishing_time):
             converted[t] = i
         return converted
 
+    # Perform DFS adding all visited vertices to SCC list
     def dfs_scc_util(   g: AdjacencyList, s: int, visited: List[int], 
                         res: List[int]) -> List[int]:
+        # Mark as visited
         visited[s] = True
+        # Add to SCC list
         res.append(s)
+        # Visit adjacent vertices
         for v in g.list[s]:
             if not(visited[v]):
                 dfs_scc_util(g, v, visited, res)
         return res
 
     # Perform DFS on original graph with vertices ordered by finishing time to
-    # get strongly connected components
+    # get lists of strongly connected components
     def dfs_scc(g: AdjacencyList, finishing_time: List[int]) -> List[List[int]]:
         # List of groups of strongly connected components
         scc = []
         # Whether each vertex has been visited or not
         visited = [False] * g.size()
+        # Perform DFS on all vertices
         for i in reversed(range(g.size())):
             if not(visited[finishing_time[i]]):
                 scc.append(dfs_scc_util(g, finishing_time[i], visited, []))
