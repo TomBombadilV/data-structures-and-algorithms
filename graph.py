@@ -96,7 +96,7 @@ class AdjacencyMatrix:
             print(*row)
 
 class GraphNode:
-    def __init__(self, val):
+    def __init__(self, val: int):
         self.val = val
         self.edges = []
 
