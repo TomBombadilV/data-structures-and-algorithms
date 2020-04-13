@@ -49,6 +49,39 @@ class AdjacencyList:
         for i, l in enumerate(self.list):
             print("{0}->{1}".format(i, l))
 
+class WeightedAdjacencyList(AdjacencyList):
+    def __init__(self, n: int):
+        super().__init__(n)
+
+    # Add weighted edge to graph
+    def add_edge(self, v1: int, v2: int, weight: int) -> bool:    
+        # Make sure vertices are valid
+        if not(self.is_valid(v1) or self.is_valid(v2)):
+            print("At least one of given vertices does not exist.")
+            return False
+        # Make sure edge doesn't already exist
+        if (v2, weight) in self.list[v1]:
+            print("Edge already exists in graph.")
+        else:
+            # Edge is represented as tuple of head vertex and edge weight
+            self.list[v1].append((v2, weight))
+            print("Edge successfully added.")
+        return True 
+    
+    # Remove an edge from the graph
+    def remove_edge(self, v1: int, v2, int, weight: int) -> bool:
+        # Make sure vertices are valid
+        if not(self.is_valid(v1) or self.is_valid(v2)):
+            print("At least one of given vertices does not exist")
+            return False
+        # Make sure edge exists
+        if not((v2, weight) in self.list[v1]):
+            print("Edge does not exist in the graph.")
+        else:
+            self.list[v1].remove((v2, weight))
+            print("Edge successfully deleted.")
+        return True
+
 class AdjacencyMatrix:
     def __init__(self, val):
         self.matrix = [[0 for _ in range(val)] for _ in range(val)]
