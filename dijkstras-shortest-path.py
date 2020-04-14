@@ -1,7 +1,8 @@
 # Dijkstra's Shortest Path Algorithm
 # Two methods:
-# 1. Naive method with exhaustive search O(V * E)
-# 2. Heap method with min heap (My implementation) O(VlogE)
+# 1. Naive method with exhaustive search => O(V * E)
+# 2. Heap method with min heap => O(VlogE)
+# This implementation uses method #2
 
 from graph import WeightedAdjacencyList
 from queue import PriorityQueue
