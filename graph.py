@@ -49,6 +49,8 @@ class AdjacencyList:
         for i, l in enumerate(self.list):
             print("{0}->{1}".format(i, l))
 
+# Adjacency list with weighted edges 
+# Inherits from AdjacencyList
 class WeightedAdjacencyList(AdjacencyList):
     def __init__(self, n: int):
         super().__init__(n)
@@ -127,6 +129,27 @@ class AdjacencyMatrix:
     def print_graph(self) -> None:
         for row in self.matrix:
             print(*row)
+
+# Adjacency matrix with weighted edges 
+# Inherits from AdjacencyMatrix
+class WeightedAdjacencyMatrix(AdjacencyMatrix):
+    def __init__(self, n: int):
+        super().__init__(n)
+
+    # Add a weighted edge to the graph
+    def add_edge(self, v1: int, v2: int, weight: int) -> bool:
+        # Make sure vertices are valid
+        if not(self.is_valid(v1) or self.is_valid(v2)):
+            print("At least one of given vertices does not exist.")
+            return False
+        # Make sure edge doesn't already exist
+        if self.matrix[v1][v2]:
+            print("Edge already exists in graph.")
+        # Add edge
+        else:
+            self.matrix[v1][v2] = weight
+            print("Edge successfully added.")
+        return True
 
 class GraphNode:
     def __init__(self, val: int):
