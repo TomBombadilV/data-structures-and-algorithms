@@ -9,7 +9,7 @@ from typing import Dict, List
 
 # Add a vertex to explored set and add its edges to the heap
 def add_vertex( g: WeightedAdjacencyList, v: int, explored: List[int], 
-                crossing_edges: PriorityQueue, vertex_scores: Dict, 
+                crossing_edges: PriorityQueue, vertex_scores: List[int], 
                 curr_vertex_score: int) -> None:
     # Mark as explored
     explored[v] = True
@@ -30,8 +30,8 @@ def dijkstras(g: WeightedAdjacencyList, s: int, t: int) -> int:
     explored = [False] * g.size()
     # Min heap for crossing edges' Dijkstra's greedy scores
     crossing_edges  = PriorityQueue()
-    # Dictionary of vertex scores
-    vertex_scores = {}
+    # List of vertex scores
+    vertex_scores = []
     # Add start vertex
     add_vertex(g, s, explored, crossing_edges, vertex_scores, 0)
     while crossing_edges.qsize():
