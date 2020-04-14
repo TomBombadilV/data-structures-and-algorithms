@@ -74,7 +74,7 @@ print(dijkstras(g, 0, 6))
 
 # Yet another graph
 # This one is from https://ycpcs.github.io/cs360-spring2015/lectures/lecture22.html
-g = WeightedAdjacencyMatrix(5)
+g = WeightedAdjacencyList(5)
 g.add_edge(0, 2, 6)
 g.add_edge(0, 3, 3)
 g.add_edge(1, 0, 3)
