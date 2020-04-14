@@ -32,7 +32,7 @@ def dijkstras(g: WeightedAdjacencyList, s: int, t: int) -> int:
     # Min heap for crossing edges' Dijkstra's greedy scores
     crossing_edges  = PriorityQueue()
     # List of vertex scores
-    dist = []
+    dist = [None] * g.size()
     # Add start vertex
     add_vertex(g, s, explored, crossing_edges, dist, 0)
     while crossing_edges.qsize():
