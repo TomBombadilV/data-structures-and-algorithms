@@ -49,8 +49,6 @@ class AdjacencyList:
         for i, l in enumerate(self.list):
             print("{0}->{1}".format(i, l))
 
-# Adjacency list with weighted edges 
-# Inherits from AdjacencyList
 class WeightedAdjacencyList(AdjacencyList):
     def __init__(self, n: int):
         super().__init__(n)
@@ -130,8 +128,6 @@ class AdjacencyMatrix:
         for row in self.matrix:
             print(*row)
 
-# Adjacency matrix with weighted edges 
-# Inherits from AdjacencyMatrix
 class WeightedAdjacencyMatrix(AdjacencyMatrix):
     def __init__(self, n: int):
         super().__init__(n)
