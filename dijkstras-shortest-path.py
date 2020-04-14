@@ -56,6 +56,7 @@ g.print_graph()
 print(dijkstras(g, 0, 3))
 
 # Trying another graph
+# This graph is from https://stackabuse.s3.amazonaws.com/media/graphs-in-java-dijkstras-algorithm-1.png
 g = WeightedAdjacencyList(7)
 g.add_edge(0, 1, 8)
 g.add_edge(0, 2, 11)
