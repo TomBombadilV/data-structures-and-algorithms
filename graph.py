@@ -44,7 +44,7 @@ class AdjacencyList:
         return True
 
     # Print entire graph
-    def print_list(self) -> None:
+    def print_graph(self) -> None:
         print("Adjacency List:")
         for i, l in enumerate(self.list):
             print("{0}->{1}".format(i, l))

@@ -87,7 +87,7 @@ def kosaraju_scc(g: AdjacencyList) -> List[List]:
         return scc
 
     g_rev = reverse_graph(g) 
-    g_rev.print_list()
+    g_rev.print_graph()
     ft = dfs_finishing_time(g_rev)
     ft = convert_finishing_time(ft)
     return dfs_scc(g, ft) 
@@ -99,7 +99,7 @@ g.add_edge(1, 2)
 g.add_edge(2, 3)
 g.add_edge(3, 1)
 g.add_edge(2, 1)
-g.print_list()
+g.print_graph()
 
 print(kosaraju_scc(g))
 
@@ -116,6 +116,6 @@ g.add_edge(5, 6)
 g.add_edge(6, 7)
 g.add_edge(7, 8)
 g.add_edge(8, 6)
-g.print_list()
+g.print_graph()
 
 print(kosaraju_scc(g))
