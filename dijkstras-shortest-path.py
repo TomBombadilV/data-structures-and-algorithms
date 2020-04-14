@@ -10,12 +10,12 @@ from typing import Dict, List
 
 # Add a vertex to explored set and add its edges to the heap
 def add_vertex( g: WeightedAdjacencyList, v: int, explored: List[int], 
-                crossing_edges: PriorityQueue, vertex_scores: List[int], 
-                curr_vertex_score: int) -> None:
+                crossing_edges: PriorityQueue, dist: List[int], 
+                curr_dist: int) -> None:
     # Mark as explored
     explored[v] = True
     # Save value of shortest path from s to this vertex
-    vertex_scores[v] = curr_vertex_score
+    dist[v] = curr_dist
     # Add each outgoing edge from vertex to unvisited vertex
     for edge in g.list[v]:
         # Retrieve head vertex and edge weight
@@ -23,7 +23,7 @@ def add_vertex( g: WeightedAdjacencyList, v: int, explored: List[int],
         # Add edge if head vertex has not been explored yet
         if not(explored[head_vertex]):
             # Dijkstra's greedy score is tail vertex score plus edge weight
-            crossing_edges.put((vertex_scores[v] + weight, head_vertex))
+            crossing_edges.put((dist[v] + weight, head_vertex))
 
 # Calculate shortest path in graph from vertex s to vertex t
 def dijkstras(g: WeightedAdjacencyList, s: int, t: int) -> int:
@@ -32,17 +32,17 @@ def dijkstras(g: WeightedAdjacencyList, s: int, t: int) -> int:
     # Min heap for crossing edges' Dijkstra's greedy scores
     crossing_edges  = PriorityQueue()
     # List of vertex scores
-    vertex_scores = []
+    dist = []
     # Add start vertex
-    add_vertex(g, s, explored, crossing_edges, vertex_scores, 0)
+    add_vertex(g, s, explored, crossing_edges, dist, 0)
     while crossing_edges.qsize():
         # Get edge with smallest Dijkstra score
         weight, vertex = crossing_edges.get()  
         # Make sure vertex has not been explored yet
         if not(explored[vertex]):
             # Add vertex to explored set
-            add_vertex(g, vertex, explored, crossing_edges, vertex_scores, weight)
-    return vertex_scores[t]
+            add_vertex(g, vertex, explored, crossing_edges, dist, weight)
+    return dist[t]
 
 # Driver code
 g = WeightedAdjacencyList(4)
