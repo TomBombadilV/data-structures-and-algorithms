@@ -88,12 +88,14 @@ class Heap:
                 count, size = 0, size * 2
         print()
 
-#l = [i for i in range(15)]
-#shuffle(l)
-l = [5, 8, 1, 9, 4, 14, 6, 11, 12, 0, 7, 13, 3, 2, 10]
+# Driver code
+l = [i for i in range(1000)]
+# Randomize list of integers
+shuffle(l)
 sorted_l = []
 print(l)
 h = Heap()
+# Use heap to sort numbers in O(nlogn time) ^_^
 for n in l:
     h.put(n)
 h.print_heap()
