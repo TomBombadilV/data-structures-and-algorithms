@@ -1,4 +1,5 @@
 from random import shuffle
+from typing import List
 
 class BSTNode:
     def __init__(self, val: int):
@@ -135,7 +136,6 @@ class BinarySearchTree:
         else:
             node = override
         # Delete the node
-        print("Deleting node ", node.val)
         perform_delete(node)
        
     # Returns maximum depth of tree
@@ -146,6 +146,32 @@ class BinarySearchTree:
             return 1 + max(max_depth_util(node.left), max_depth_util(node.right))
         
         return max_depth_util(self.root)
+
+    # Returns list of node values in inorder traversal
+    def inorder_traversal(self) -> List[int]:
+        def inorder_util(node: BSTNode, res: List[int]) -> List[int]:
+            if node:
+                # Left, root, right
+                inorder_util(node.left, res)
+                res.append(node.val)
+                inorder_util(node.right, res)
+            return res
+        
+        return inorder_util(self.root, [])
+
+    # Returns list of node values in level order (BFS)
+    def level_order_traversal(self) -> List[int]:
+        q, res = [], []
+        curr = self.root
+        while curr or q:
+            res.append(curr.val)
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+            curr = q[0] if q else None
+            q = q[1:]
+        return res
 
     # Prints entire tree
     def print_tree(self) -> None:
@@ -159,6 +185,7 @@ class BinarySearchTree:
                 print_tree_util(node.right, child_branch + '└───', child_branch + '     ')
         print_tree_util(self.root, '', '')
 
+# Creates BST from shuffled list of 0...n-1
 class RandomBST(BinarySearchTree):
     def __init__(self, n: int):
         super().__init__()
@@ -168,9 +195,12 @@ class RandomBST(BinarySearchTree):
         for i in l:
             self.insert(i)
 
+# Driver code
 rbst = RandomBST(10)
 rbst.print_tree()
 print("Tree max: ", rbst.get_max(rbst.root).val)
 print("Deleting node 0")
 rbst.delete(0)
 rbst.print_tree()
+print("Inorder traversal: ", rbst.inorder_traversal())
+print("Level order traversal: ", rbst.level_order_traversal())
