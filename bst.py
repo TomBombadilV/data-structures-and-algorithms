@@ -41,6 +41,7 @@ class BinarySearchTree:
                     curr = curr.right
             # If value already exists in tree, then stop 
             else:
+                print("Node already exists in tree.")
                 return
    
     # Returns node with corresponding value
@@ -54,16 +55,6 @@ class BinarySearchTree:
             else:
                 curr = curr.right
         return None
-
-    def update_parents_child(self, old_child: BSTNode, new_child: BSTNode) -> None:
-        # Get parent
-        parent = old_child.parent
-        # If node was a left child
-        if old_child.type == 0:
-            parent.left = new_child
-        # If node was a right child
-        else:
-            parent.right = new_child
 
     # Return max value of tree starting at given node. Default is root
     def get_max(self, root: BSTNode = None) -> BSTNode:
@@ -87,17 +78,52 @@ class BinarySearchTree:
             root = self.root
         return get_max_util(root, root)
 
-    # Swaps node value with value of max of left subtree and deletes old node
-    def swap_and_delete(self, node: BSTNode) -> None:
-        # Get max of left subtree (natural predecessor)
-        max_left_subtree = self.get_max(node.left)
-        # Swap value of node with value of max of left subtree
-        max_left_subtree.val, node.val = node.val, max_left_subtree.val
-        # Delete node of left subtree max (deletes node value)
-        self.delete(None, max_left_subtree)
-
-    # Delete node with given value
+    # Delete node with given value. Also have option of passing in a node.
     def delete(self, val: int, override: BSTNode = None) -> None:
+        
+        # Changes parent's child to new node
+        def update_parents_child(old_child: BSTNode, new_child: BSTNode) -> None:
+            # Get parent
+            parent = old_child.parent
+            # No parent means node is root node
+            if not(parent):
+                self.root = new_child
+            # If node was a left child
+            elif old_child.type == 0:
+                parent.left = new_child
+            # If node was a right child
+            else:
+                parent.right = new_child
+
+        # Swaps node value with value of max of left subtree and deletes old node
+        def swap_and_delete(node: BSTNode) -> None:
+            # Get max of left subtree (natural predecessor)
+            max_left_subtree = self.get_max(node.left)
+            # Swap value of node with value of max of left subtree
+            max_left_subtree.val, node.val = node.val, max_left_subtree.val
+            # Delete node of left subtree max (deletes node value)
+            self.delete(None, max_left_subtree)
+
+        # Checks which deletion case to use and performs deletion
+        def perform_delete(node: BSTNode) -> None:
+             # Node has no children (yey :D)
+            if not(node.left) and not(node.right):
+                # Set parent to point to None
+                update_parents_child(node, None)
+            # Node has only left child
+            elif not(node.right):
+                # Set parent to point to node's left child
+                update_parents_child(node, node.left)
+            # Node has only right child
+            elif not(node.left):    
+                # Set parent to point to node's right child
+                update_parents_child(node, node.right)
+            # Node has both children D:
+            else:
+                # Swap with and delete node max of left subtree
+                swap_and_delete(node)
+        
+        # If no node passed, in look up by value
         if not(override):
             # Find the corresponding node
             node = self.find(val)
@@ -105,25 +131,13 @@ class BinarySearchTree:
             if not(node):
                 print("Node doesn't exist in tree.")
                 return
+        # Node passed in
         else:
             node = override
-        # Node has no children (yey :D)
-        if not(node.left) and not(node.right):
-            # Set parent to point to None
-            self.update_parents_child(node, None)
-        # Node has only left child
-        elif not(node.right):
-            # Set parent to point to node's left child
-            self.update_parents_child(node, node.left)
-        # Node has only right child
-        elif not(node.left):    
-            # Set parent to point to node's right child
-            self.update_parents_child(node, node.right)
-        # Node has both children D:
-        else:
-            # Swap with and delete node max of left subtree
-            self.swap_and_delete(node)
-
+        # Delete the node
+        print("Deleting node ", node.val)
+        perform_delete(node)
+       
     # Returns maximum depth of tree
     def depth(self) -> int:
         def max_depth_util(node: BSTNode) -> int:
@@ -157,5 +171,6 @@ class RandomBST(BinarySearchTree):
 rbst = RandomBST(10)
 rbst.print_tree()
 print("Tree max: ", rbst.get_max(rbst.root).val)
-rbst.delete(8)
+print("Deleting node 0")
+rbst.delete(0)
 rbst.print_tree()
