@@ -81,12 +81,21 @@ class BinarySearchTree:
             root = self.root
         return get_max_util(root, root)
 
+    # Swaps node value with value of max of left subtree and deletes old node
+    def swap_and_delete(self, node: BSTNode) -> None:
+        # Get max of left subtree (natural predecessor)
+        max_left_subtree = get_max(node.left)
+        # Swap value of node with value of max of left subtree
+        max_left_subtree.val, node.val = node.val, max_left_subtree.val
+        # Delete node of left subtree max (deletes node value)
+        self.delete(max_left_subtree)
+
+    # Delete node with given value
     def delete(self, val) -> None:
         # Find the corresponding node
         node = self.find(val)
         # Node doesn't exist in tree
         if not(node):
-            print("Node does not exist in the tree.")
             return
         # Node is root
         if node == self.root:
@@ -94,22 +103,20 @@ class BinarySearchTree:
             return
         # Node has no children (yey :D)
         if not(node.left) and not(node.right):
+            # Set parent to point to None
             self.update_parents_child(node, None)
         # Node has only left child
         elif not(node.right):
+            # Set parent to point to node's left child
             self.update_parents_child(node, node.left)
         # Node has only right child
-        elif not(node.left):
+        elif not(node.left):    
+            # Set parent to point to node's right child
             self.update_parents_child(node, node.right)
         # Node has both children D:
         else:
-            # Get max of left subtree (natural predecessor)
-            max_left_subtree = get_max(node.left)
-            # Swap value of node with value of max of left subtree
-            max_left_subtree.val, node.val = node.val, max_left_subtree.val
-            # Delete node of left subtree max (deletes node value)
-            self.delete(max_left_subtree)
-            # 
+            # Swap with and delete node max of left subtree
+            self.swap_and_delete(node)
 
     def depth(self) -> int:
         def max_depth_util(node: BSTNode) -> int:
