@@ -6,13 +6,16 @@ class BSTNode:
         self.parent = None
         self.left = None
         self.right = None
-        self.type = None
+        # Whether node is a right (1) or left (0) child
+        self.type = -1
 
 class BinarySearchTree:
     def __init__(self):
          self.root = None
     
+    # Inserts a node with the given value
     def insert(self, val:int) -> None:
+        # If no root, set as new root
         if not(self.root):
             self.root = BSTNode(val)
             return
@@ -20,6 +23,7 @@ class BinarySearchTree:
         while curr:
             if val < curr.val:
                 if not(curr.left):
+                    # Add to tree as left child
                     curr.left = BSTNode(val)
                     curr.left.parent = curr
                     curr.left.type = 0
@@ -28,16 +32,18 @@ class BinarySearchTree:
                     curr = curr.left
             elif val > curr.val:
                 if not(curr.right):
+                    # Add to tree as right child
                     curr.right = BSTNode(val)
                     curr.right.parent = curr
                     curr.right.type = 1
                     return
                 else:
                     curr = curr.right
-            # No duplicates plz 
+            # If value already exists in tree, then stop 
             else:
                 return
-    
+   
+    # Returns node with corresponding value
     def find(self, val: int) -> BSTNode:
         curr = self.root
         while curr:
@@ -84,23 +90,23 @@ class BinarySearchTree:
     # Swaps node value with value of max of left subtree and deletes old node
     def swap_and_delete(self, node: BSTNode) -> None:
         # Get max of left subtree (natural predecessor)
-        max_left_subtree = get_max(node.left)
+        max_left_subtree = self.get_max(node.left)
         # Swap value of node with value of max of left subtree
         max_left_subtree.val, node.val = node.val, max_left_subtree.val
         # Delete node of left subtree max (deletes node value)
-        self.delete(max_left_subtree)
+        self.delete(None, max_left_subtree)
 
     # Delete node with given value
-    def delete(self, val) -> None:
-        # Find the corresponding node
-        node = self.find(val)
-        # Node doesn't exist in tree
-        if not(node):
-            return
-        # Node is root
-        if node == self.root:
-            self.root = None
-            return
+    def delete(self, val: int, override: BSTNode = None) -> None:
+        if not(override):
+            # Find the corresponding node
+            node = self.find(val)
+            # Node doesn't exist in tree
+            if not(node):
+                print("Node doesn't exist in tree.")
+                return
+        else:
+            node = override
         # Node has no children (yey :D)
         if not(node.left) and not(node.right):
             # Set parent to point to None
@@ -118,6 +124,7 @@ class BinarySearchTree:
             # Swap with and delete node max of left subtree
             self.swap_and_delete(node)
 
+    # Returns maximum depth of tree
     def depth(self) -> int:
         def max_depth_util(node: BSTNode) -> int:
             if not(node):
@@ -126,31 +133,29 @@ class BinarySearchTree:
         
         return max_depth_util(self.root)
 
+    # Prints entire tree
     def print_tree(self) -> None:
-        q = []
-        curr = self.root
-        level = 0
-        while curr or q:
-            print(curr.val, end=" ")
-            if curr.left:
-                q.append((curr.left, level + 1))
-            if curr.right:
-                q.append((curr.right, level + 1))
-            prev_level = level
-            curr, level = q[0] if q else (None, None)
-            if not(level == prev_level):
-                print()
-            q = q[1:]
-
+        def print_tree_util(node: BSTNode, branch: str, child_branch: str) -> None:
+            print(branch, node.val)
+            if node.left and node.right:
+                print_tree_util(node.left, child_branch + '├───', child_branch + '│    ')
+            if node.left and not(node.right):
+                print_tree_util(node.left, child_branch + '└───', child_branch + '     ')
+            if node.right:
+                print_tree_util(node.right, child_branch + '└───', child_branch + '     ')
+        print_tree_util(self.root, '', '')
 
 class RandomBST(BinarySearchTree):
     def __init__(self, n: int):
         super().__init__()
         l = [i for i in range(n)]
         shuffle(l)
+        print(l)
         for i in l:
             self.insert(i)
 
 rbst = RandomBST(10)
 rbst.print_tree()
 print("Tree max: ", rbst.get_max(rbst.root).val)
+rbst.delete(8)
+rbst.print_tree()
