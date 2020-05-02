@@ -12,7 +12,7 @@ class AVLTree(BinarySearchTree):
         super().__init__()
 
     def insert(self, val: int) -> None:
-        def recurse(root: AVLNode, val: int)
+        def recurse(root: AVLNode, val: int):
             if not(self.root):
                 self.root = AVLNode(val)
             if val < root.val:
@@ -29,3 +29,13 @@ class AVLTree(BinarySearchTree):
                     root.right = AVLNode(val)
             else:
                 return
+
+def test_avl_tree():
+    l = [1, 2, 3, 4]
+    avl = AVLTree()
+    for n in l:
+        avl.insert(n)
+        avl.print_tree()
+
+if __name__ == '__main__':
+    test_avl_tree()

@@ -196,11 +196,15 @@ class RandomBST(BinarySearchTree):
             self.insert(i)
 
 # Driver code
-rbst = RandomBST(10)
-rbst.print_tree()
-print("Tree max: ", rbst.get_max(rbst.root).val)
-print("Deleting node 0")
-rbst.delete(0)
-rbst.print_tree()
-print("Inorder traversal: ", rbst.inorder_traversal())
-print("Level order traversal: ", rbst.level_order_traversal())
+def test_random_bst():
+    rbst = RandomBST(10)
+    rbst.print_tree()
+    print("Tree max: ", rbst.get_max(rbst.root).val)
+    print("Deleting node 0")
+    rbst.delete(0)
+    rbst.print_tree()
+    print("Inorder traversal: ", rbst.inorder_traversal())
+    print("Level order traversal: ", rbst.level_order_traversal())
+
+if __name__ == '__main__':
+    test_random_bst()
