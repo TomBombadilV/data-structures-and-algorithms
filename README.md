@@ -5,6 +5,7 @@ My implementations of some data structures and well-known algorithms
 * [Graph Representations - Adjacency List, Adjacency Matrix, and Graph Nodes](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/graph.py)
 * [Min Heap](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/heap.py)
 * [Linked List](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/linkedList.py)
+* [Bloom Filter](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/bloomfilter.py)
 
 ## Algorithms
 * [Binary Search](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/binary-search.py)
