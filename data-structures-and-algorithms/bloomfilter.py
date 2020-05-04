@@ -1,4 +1,4 @@
-# Implementation of a Bloom Filter using combinatorial Murmur3 hash
+# Implementation of a Bloom Filter using Murmur3 hash
 
 from math import ceil, log
 import mmh3
