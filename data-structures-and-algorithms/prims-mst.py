@@ -14,6 +14,7 @@ def _add_edges(g: WeightedAdjacencyMatrix,
     '"""
     v_edges = g.matrix[v]
     for v_tail, weight in enumerate(v_edges):
+        # Only add crossing edges
         if weight and not v_tail in explored:
             crossing_edges.put((weight, v, v_tail))
     return crossing_edges
@@ -21,16 +22,22 @@ def _add_edges(g: WeightedAdjacencyMatrix,
 def prims(g: WeightedAdjacencyMatrix) -> WeightedAdjacencyMatrix:
     """
     Performs Prim's algorithm on a Weighted Adjacency Matrix graph and returns
-    its minimum spanning tree.
+    its minimum spanning tree. Assumes graph is connected and undirected.
     """
-    s = 0
+    # Initialize starting vertex, heap, and MST
+    s = 0 
     crossing_edges = PriorityQueue()
     mst = WeightedAdjacencyMatrix(g.size())
+    
+    # Add s to explored set and add its edges to heap
     explored = {s}
     crossing_edges = _add_edges(g, s, explored, crossing_edges)
 
+    # While vertices haven't been explored
     while len(explored) < g.size():
+        # Get edge with smallest weight
         weight, v_head, v = crossing_edges.get()
+        # Make sure it hasn't been explored, then add it to MST
         if not v in explored:
             explored.add(v)
             crossing_edges = _add_edges(g, v, explored, crossing_edges)
@@ -39,20 +46,6 @@ def prims(g: WeightedAdjacencyMatrix) -> WeightedAdjacencyMatrix:
     return mst
 
 # Driver Code
-def make_undirected(g: WeightedAdjacencyMatrix) -> WeightedAdjacencyMatrix:
-    """
-    Takes all directed edges in an adjacency matrix and makes them 
-    undirected by adding their inverse edge to the matrix. Ex: if edge i, j
-    exists, it will add edge j, i as well.
-    """
-    print("Making graph undirected")
-    if not(g.size):
-        return g
-    for i in range(len(g.matrix)):
-        for j in range(len(g.matrix[0])):
-            if g.matrix[i][j]:
-                g.matrix[j][i] = g.matrix[i][j]
-    return g
 
 # Graph from https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
 g = WeightedAdjacencyMatrix(9)
