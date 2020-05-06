@@ -186,5 +186,3 @@ def undirected(g: WeightedAdjacencyMatrix) -> WeightedAdjacencyMatrix:
                 if g.matrix[i][j]:
                     g.matrix[j][i] = g.matrix[i][j]
         return g
-
-
