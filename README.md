@@ -15,4 +15,4 @@ My implementations of some data structures and well-known algorithms
 * [Depth First Search, Breadth First Search, and Topological Sort](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/data-structures-and-algorithms/graph-searches-and-sorts.py)
 * [Kosaraju's Strongly Connected Components](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/data-structures-and-algorithms/kosarajus-strongly-connected-components.py)
 * [Merge Sort](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/data-structures-and-algorithms/merge-sort.py)
-* [Prim's Minimum Spanning Tree](https://github.com/TomBombadilV/data-structures-and-alg    orithms/blob/master/data-structures-and-algorithms/prims-mst.py)
+* [Prim's Minimum Spanning Tree](https://github.com/TomBombadilV/data-structures-and-algorithms/blob/master/data-structures-and-algorithms/prims-mst.py)
