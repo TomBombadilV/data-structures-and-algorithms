@@ -1,3 +1,5 @@
+# Implementations of Directed Graphs
+
 class AdjacencyList:
     def __init__(self, n: int):
         # Using list of lists instead of list of sets to allow for multiple
@@ -155,3 +157,34 @@ class GraphNode:
     def print_edges(self):
         print("{0}'s edges: ".format(self.val), end="")
         print(*[edge.val for edge in self.edges])
+
+def undirected(g: WeightedAdjacencyMatrix) -> WeightedAdjacencyMatrix:
+        """ 
+        Takes all directed edges in an adjacency matrix and makes them 
+        undirected by adding their inverse edge to the matrix. Ex: if edge i, j
+        exists, it will add edge j, i as well. 
+        """
+        print("Making graph undirected...")
+       
+        # No can do bub
+        if not(g.size):
+            return g
+        
+        # Check for mismatching directed edges (edges of different weights
+        # between two vertices)
+        for i in range(len(g.matrix)):
+            for j in range(len(g.matrix[0])):
+                if g.matrix[i][j] and g.matrix[j][i] and\
+                    not g.matrix[i][j] == g.matrix[j][i]:
+                    print("Graph has mismatching directed edges. Please remove \
+                           at least one of them.")
+                    return g
+
+        # Add inverse edges
+        for i in range(len(g.matrix)):
+            for j in range(len(g.matrix[0])):
+                if g.matrix[i][j]:
+                    g.matrix[j][i] = g.matrix[i][j]
+        return g
+
+
